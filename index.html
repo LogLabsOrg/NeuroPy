@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroPy | Simple LLM Modeling by LogLabs</title>
+    <title>NeuroPy | Genesis Alpha by LogLabs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code&display=swap" rel="stylesheet">
     <style>
@@ -14,18 +14,17 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
         .terminal-window {
             background: #0d0d0d; border: 1px solid #222; border-radius: 12px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
-        .backend-card { background: #111; border: 1px solid #222; transition: all 0.3s ease; }
-        .backend-card:hover { border-color: #4facfe; transform: translateY(-5px); }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
         .btn-primary { background: #fff; color: #000; transition: all 0.2s; }
         .btn-primary:hover { background: #4facfe; color: #fff; transform: scale(1.05); }
+        .wiki-block { border-left: 2px solid #333; padding-left: 1.5rem; margin-bottom: 2rem; }
     </style>
 </head>
 <body class="antialiased">
@@ -38,10 +37,9 @@
                 </div>
             </div>
             <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
-                <a href="#install" class="hover:text-blue-400 transition">Instalación</a>
-                <a href="#neuron" class="hover:text-blue-400 transition">Neuron Tech</a>
+                <a href="#wiki" class="hover:text-blue-400 transition">Documentación</a>
+                <a href="#logai" class="hover:text-blue-400 transition">LogAI Dept</a>
                 <a href="#vscode" class="hover:text-blue-400 transition">VS Code</a>
-                <a href="#loglabs" class="hover:text-blue-400 transition">LogLabs</a>
             </div>
             <a href="https://github.com/loglabsorg/NeuroPy" class="text-sm font-bold hover:text-blue-400 transition">GitHub</a>
         </div>
@@ -49,167 +47,146 @@
 
     <header class="max-w-5xl mx-auto text-center pt-24 pb-16 px-6">
         <div class="inline-block px-4 py-1 mb-6 border border-yellow-500/30 rounded-full bg-yellow-500/10 text-yellow-500 text-[10px] font-black tracking-[0.2em] uppercase animate-pulse">
-            v0.3.0 Alpha Release
+            v0.3.0 Alpha Stage
         </div>
         <h1 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-tight">
-            Build LLMs <br><span class="gradient-text">Better & Faster.</span>
+            The Language of <br><span class="gradient-text">Neuron Architecture.</span>
         </h1>
-        <p class="text-gray-500 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium leading-relaxed">
-            Impulsado por la arquitectura <strong>Neuron</strong>. Desarrollado por el departamento <strong>LogAI</strong> de LogLabs para la próxima generación de IA.
+        <p class="text-gray-500 text-lg md:text-xl mb-12 max-w-3xl mx-auto font-medium leading-relaxed">
+            NeuroPy no es solo un wrapper. Es el lenguaje de interfaz diseñado por <strong>LogAI</strong> para controlar el núcleo <strong>Neuron</strong>, permitiendo el despliegue nativo de modelos como Cleo Nano.
         </p>
 
         <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-            <a href="https://github.com/loglabsorg/NeuroPy/raw/main/install.sh" class="btn-primary px-8 py-4 rounded-xl font-bold flex items-center justify-center shadow-lg shadow-blue-500/10">
-                <svg class="w-5 h-5 mr-3" viewBox="0 0 40 40" fill="none">
-                    <rect width="40" height="40" rx="6" fill="#0D0D14"/>
-                    <path d="M12 10V30H16L24.5 18V30H28.5V10H24.5L16 22V10H12Z" fill="#7878D1"/>
-                    <circle cx="28.5" cy="28.5" r="4.5" fill="#00f2fe"/>
-                </svg>
-                Instalar en Linux
+            <a href="#install" class="btn-primary px-8 py-4 rounded-xl font-bold flex items-center justify-center">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                Instalar Alpha (Linux)
             </a>
             <a href="#vscode" class="bg-[#111] border border-[#333] px-8 py-4 rounded-xl font-bold flex items-center justify-center hover:border-blue-500 transition text-gray-300">
+                <svg class="w-5 h-5 mr-3 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .327 8.74l4.256 3.26-4.256 3.26a1 1 0 0 0 0 1.479l1.322 1.201a1 1 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.494 1.494 0 0 0 1.705.29l4.94-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
                 Extensión VS Code
             </a>
         </div>
+    </header>
 
-        <div id="install" class="terminal-window text-left max-w-2xl mx-auto overflow-hidden">
-            <div class="bg-[#1a1a1a] px-4 py-2 border-b border-white/5 flex items-center justify-between">
-                <div class="flex space-x-2">
+    <section id="wiki" class="max-w-6xl mx-auto py-24 px-6 border-t border-white/5">
+        <div class="grid md:grid-cols-3 gap-12">
+            <div class="md:col-span-1">
+                <h2 class="text-3xl font-black mb-6 italic underline decoration-blue-500 decoration-4 underline-offset-8">Wiki Alpha</h2>
+                <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                    Principios base del lenguaje. NeuroPy requiere la extensión <code class="text-white">.npy</code> o <code class="text-white">.ny</code> para ser interpretado correctamente por el core de Neuron.
+                </p>
+                <nav class="space-y-4 text-xs font-bold uppercase tracking-widest text-gray-600">
+                    <p class="text-blue-400">01. Inicialización</p>
+                    <p>02. Creación de Modelos</p>
+                    <p>03. Interfaces (ofm)</p>
+                </nav>
+            </div>
+
+            <div class="md:col-span-2 space-y-12">
+                <div class="wiki-block">
+                    <h4 class="text-white font-bold mb-4 flex items-center">
+                        <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span> El Script Maestro
+                    </h4>
+                    <div class="terminal-window p-6 code-font text-xs leading-6">
+                        <span class="text-blue-400">#NeuroPy</span> <span class="text-purple-400">&lt;neuron&gt;</span> <span class="text-gray-600">// Indica el uso de arquitectura Neuron</span><br>
+                        <span class="text-purple-400">import</span> MyLLM.lib <span class="text-gray-600">// Carga de librerías</span>
+                    </div>
+                </div>
+
+                <div class="wiki-block">
+                    <h4 class="text-white font-bold mb-4 flex items-center">
+                        <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span> Estructura de Creación (LLM)
+                    </h4>
+                    <div class="terminal-window p-6 code-font text-xs leading-6">
+                        <span class="text-purple-400">create</span> LLM {<br>
+                        &nbsp;&nbsp;name model ("MyLLM")<br>
+                        &nbsp;&nbsp;optimizer Adam(lr=0.001)<br>
+                        &nbsp;&nbsp;save-model "path/to/model.ggfu"<br>
+                        }<br>
+                        <span class="text-purple-400">start</span> create LLM (<br>
+                        &nbsp;&nbsp;save-data "log.json"<br>
+                        )
+                    </div>
+                </div>
+
+                <div class="wiki-block">
+                    <h4 class="text-white font-bold mb-4 flex items-center">
+                        <span class="w-2 h-2 bg-purple-500 rounded-full mr-3"></span> Lógica de Respuesta (ofm)
+                    </h4>
+                    <div class="terminal-window p-6 code-font text-xs leading-6">
+                        <span class="text-blue-500">ofm</span> MyLLM.lib( <span class="text-gray-600">// Open For Model</span><br>
+                        &nbsp;&nbsp;<span class="text-green-400">send</span>(imf"MyLLM") <span class="text-gray-600">// User Input</span><br>
+                        &nbsp;&nbsp;<span class="text-yellow-400">response</span>(@) <span class="text-gray-600">// Model Response</span><br>
+                        <span class="text-blue-500">end ofm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vscode" class="max-w-6xl mx-auto py-24 px-6 border-t border-white/5 bg-gradient-to-b from-transparent to-blue-900/5">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <div class="flex-1">
+                <h2 class="text-4xl font-black mb-6 italic">NeuroPy <span class="text-blue-500">for VS Code</span></h2>
+                <p class="text-gray-400 mb-8 leading-relaxed">
+                    Instala el entorno de desarrollo oficial. Incluye resaltado de sintaxis para comandos <code class="text-white">create</code>, <code class="text-white">ofm</code> y detección automática del header <code class="text-white">#NeuroPy &lt;neuron&gt;</code>.
+                </p>
+                <div class="flex space-x-4">
+                    <div class="p-4 glass-panel rounded-xl text-center flex-1">
+                        <p class="text-xs text-gray-500 uppercase font-bold mb-1">Status</p>
+                        <p class="text-green-400 font-bold">Stable Alpha</p>
+                    </div>
+                    <div class="p-4 glass-panel rounded-xl text-center flex-1">
+                        <p class="text-xs text-gray-500 uppercase font-bold mb-1">Downloads</p>
+                        <p class="text-white font-bold">.vsix / .zip</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 terminal-window p-8 shadow-2xl relative group">
+                <div class="absolute -inset-1 bg-blue-500/20 blur opacity-0 group-hover:opacity-100 transition"></div>
+                <div class="flex items-center space-x-2 mb-6">
                     <div class="w-3 h-3 bg-red-500/50 rounded-full"></div>
                     <div class="w-3 h-3 bg-yellow-500/50 rounded-full"></div>
                     <div class="w-3 h-3 bg-green-500/50 rounded-full"></div>
                 </div>
-                <span class="text-[9px] text-gray-500 uppercase tracking-widest font-black code-font">LogAI Framework Alpha</span>
-            </div>
-            <div class="p-8 code-font text-sm leading-relaxed">
-                <p class="text-gray-600 italic mb-2"># Quick install for Arch/Linux users</p>
-                <p><span class="text-blue-400">chmod</span> +x install.sh</p>
-                <p><span class="text-green-400">./install.sh</span> --full</p>
-                <br>
-                <p class="text-gray-500"># Verify installation</p>
-                <p><span class="text-blue-400">neuropy</span> --version</p>
-            </div>
-        </div>
-    </header>
+                <pre class="code-font text-[13px] leading-7">
+<span class="text-blue-400">#NeuroPy</span> <span class="text-purple-400">&lt;neuron&gt;</span>
+<span class="text-purple-400">import</span> Console.lib
 
-    <section id="neuron" class="max-w-6xl mx-auto py-24 px-6 border-t border-white/5">
-        <div class="text-center mb-16">
-            <h2 class="text-blue-500 font-bold uppercase tracking-[0.2em] text-xs mb-4 italic underline underline-offset-8">Core Engine</h2>
-            <h3 class="text-4xl md:text-5xl font-black text-white italic">La Era <span class="gradient-text">Neuron</span></h3>
-        </div>
+<span class="text-purple-400">prompt</span> MyLLM.lib(<span class="text-yellow-400">"MyAI >"</span>)
+<span class="text-blue-500">imput for</span> MyLLM (&)
 
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6">
-                <div class="glass-panel p-8 rounded-2xl border-l-4 border-l-blue-500 hover:border-l-blue-400 transition-all">
-                    <h4 class="text-xl font-bold text-white mb-3 italic">Neuron Core Architecture</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Neuron es el motor de red neuronal propietario de <strong>LogLabs</strong>. Es la base genética donde se define la inteligencia, optimizando la sinapsis de datos antes de llegar a la capa de usuario.
-                    </p>
-                </div>
-                <div class="glass-panel p-8 rounded-2xl hover:border-white/10 transition-all">
-                    <h4 class="text-xl font-bold text-white mb-3 italic">NeuroPy Interface</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        El puente definitivo. NeuroPy permite a los desarrolladores de Python interactuar con el motor Neuron mediante una sintaxis fluida y de alto nivel.
-                    </p>
-                </div>
-            </div>
-
-            <div class="relative p-1 bg-gradient-to-br from-blue-600 via-purple-600 to-transparent rounded-3xl overflow-hidden shadow-2xl">
-                <div class="bg-[#050505] p-10 rounded-[22px] h-full relative overflow-hidden">
-                    <div class="absolute inset-0 bg-blue-500/5 animate-pulse"></div>
-                    <div class="absolute top-4 right-6 bg-blue-500 text-black text-[10px] font-black px-4 py-1 uppercase tracking-widest rounded-full">
-                        Genesis Model
-                    </div>
-                    <h3 class="text-xs font-bold text-blue-400 tracking-widest uppercase mb-2">Next Gen Model</h3>
-                    <h2 class="text-4xl font-black text-white mb-6">Cleo Nano</h2>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-8">
-                        Basado <strong>íntegramente en la arquitectura Neuron</strong>. Cleo Nano representa la culminación del desarrollo en LogAI: inteligencia masiva en el tamaño más reducido posible.
-                    </p>
-                    <div class="p-4 border border-white/5 bg-white/[0.02] rounded-xl flex justify-between text-[10px] font-bold text-gray-600 relative">
-                        <span>LOGAI DEPT.</span>
-                        <span class="text-blue-500 italic">NEURON_NATIVE_BOOT...</span>
-                    </div>
-                </div>
+<span class="text-green-400">Start</span> MyLLM.lib
+                </pre>
             </div>
         </div>
     </section>
 
-    <section id="vscode" class="max-w-6xl mx-auto py-24 px-6 border-y border-white/5">
-        <div class="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-                <h2 class="text-3xl font-bold mb-6 italic">NeuroPy <span class="text-blue-500">for VS Code</span></h2>
-                <ul class="space-y-4 text-sm text-gray-400">
-                    <li class="flex items-start"><span class="text-blue-500 mr-3">✔</span> <span>Syntax Highlighting nativo para archivos <code class="text-white">.npy</code>.</span></li>
-                    <li class="flex items-start"><span class="text-blue-500 mr-3">✔</span> <span>Ejecución rápida integrada (<kbd class="bg-[#222] px-2 rounded text-[10px]">Ctrl+Shift+N</kbd>).</span></li>
-                    <li class="flex items-start"><span class="text-blue-500 mr-3">✔</span> <span>Snippets técnicos para el ecosistema LogLabs.</span></li>
-                </ul>
-                <a href="https://github.com/loglabsorg/NeuroPy/raw/main/vscode-extension-neuropy.zip" class="mt-8 inline-block text-blue-400 font-bold border-b border-blue-400/30 hover:border-blue-400 transition pb-1">
-                    Download extension.zip ↓
-                </a>
+    <section id="logai" class="max-w-6xl mx-auto py-32 px-6">
+        <div class="grid md:grid-cols-2 gap-16">
+            <div class="p-12 glass-panel rounded-[3rem] border-blue-500/20 relative overflow-hidden">
+                <h3 class="text-blue-400 font-black tracking-[0.3em] uppercase text-xs mb-6">Parent Organization</h3>
+                <h2 class="text-5xl font-black text-white mb-6 tracking-tighter">LogLabs</h2>
+                <p class="text-gray-400 leading-relaxed italic">
+                    Una Startup dedicada a la construcción de infraestructura tecnológica de bajo nivel. En LogLabs no solo creamos software, diseñamos los cimientos donde corre la próxima generación de servicios digitales.
+                </p>
             </div>
-            <div class="glass-panel p-8 rounded-2xl shadow-2xl relative">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-2">
-                        <svg class="w-5 h-5" viewBox="0 0 40 40" fill="none">
-                            <rect width="40" height="40" rx="6" fill="#0D0D14"/>
-                            <path d="M12 10V30H16L24.5 18V30H28.5V10H24.5L16 22V10H12Z" fill="#7878D1"/>
-                            <circle cx="28.5" cy="28.5" r="4.5" fill="#00f2fe"/>
-                        </svg>
-                        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Preview: main.npy</span>
-                    </div>
-                    <span class="text-xs text-green-500 underline underline-offset-4 decoration-dotted">Ctrl+Shift+N to Run</span>
+            <div class="p-12 glass-panel rounded-[3rem] border-purple-500/20 bg-gradient-to-br from-purple-900/10 to-transparent">
+                <h3 class="text-purple-400 font-black tracking-[0.3em] uppercase text-xs mb-6">Artificial Intelligence Division</h3>
+                <h2 class="text-5xl font-black text-white mb-6 tracking-tighter">LogAI</h2>
+                <p class="text-gray-400 leading-relaxed">
+                    Departamento especializado en **Modelado y Arquitectura de Redes Neuronales**. LogAI es el responsable de la creación de <strong>Neuron</strong> (la estructura privada) y su implementación pública a través de <strong>NeuroPy</strong>.
+                </p>
+                <div class="mt-8 flex items-center space-x-4">
+                    <span class="px-3 py-1 bg-white/5 rounded-full text-[10px] font-bold text-gray-500 uppercase tracking-widest">Research</span>
+                    <span class="px-3 py-1 bg-white/5 rounded-full text-[10px] font-bold text-gray-500 uppercase tracking-widest">Neural Design</span>
                 </div>
-                <pre class="code-font text-sm leading-7">
-<span class="text-gray-600 italic">// Pure Neuron Generation</span>
-<span class="text-blue-400">#NeuroPy</span>
-<span class="text-purple-400">create</span> model LLM_Genesis {
-  <span class="text-green-400">ofm</span>: <span class="text-yellow-400">"neuron-alpha"</span>,
-  <span class="text-blue-400">params</span>: <span class="text-white">*1</span>,
-  <span class="text-blue-400">layers</span>: <span class="text-white">@12</span>,
-  <span class="text-blue-400">precision</span>: <span class="text-white">&int8</span>
-}</pre>
             </div>
-        </div>
-    </section>
-
-    <section id="backends" class="max-w-6xl mx-auto py-24 px-6 border-b border-white/5">
-        <h2 class="text-center text-4xl font-bold mb-16 text-white font-black italic">Backends Integrados</h2>
-        <div class="grid md:grid-cols-3 gap-8 text-center md:text-left">
-            <div class="backend-card p-8 rounded-2xl hover:scale-105 transition-all">
-                <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mb-6 mx-auto md:mx-0 font-bold text-blue-400">P</div>
-                <h3 class="text-white font-bold mb-2 italic">PyTorch Core</h3>
-                <p class="text-gray-500 text-sm leading-relaxed">Entrenamiento con barra de progreso y exportación nativa a modelos .pth.</p>
-            </div>
-            <div class="backend-card p-8 rounded-2xl hover:scale-105 transition-all border-blue-500/20 shadow-blue-500/10 shadow-lg">
-                <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center mb-6 mx-auto md:mx-0 font-bold text-purple-400">HF</div>
-                <h3 class="text-white font-bold mb-2 italic">HF & Llama</h3>
-                <p class="text-gray-500 text-sm leading-relaxed">Carga instantánea de modelos de HuggingFace y soporte nativo para GGUF.</p>
-            </div>
-            <div class="backend-card p-8 rounded-2xl hover:scale-105 transition-all">
-                <div class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center mb-6 mx-auto md:mx-0 font-bold text-green-400">V</div>
-                <h3 class="text-white font-bold mb-2 italic">NeuroViz</h3>
-                <p class="text-gray-500 text-sm leading-relaxed">Dashboard integrado con Matplotlib usando la estética NeuroPy.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="loglabs" class="max-w-4xl mx-auto py-32 px-6 text-center border-t border-white/5">
-        <div class="mb-12">
-            <h2 class="text-4xl font-black mb-4 tracking-tighter italic">LogLabs</h2>
-            <div class="w-12 h-1 bg-blue-500 mx-auto rounded-full"></div>
-        </div>
-        <p class="text-gray-400 mb-10 leading-relaxed max-w-2xl mx-auto italic font-medium">
-            "Dedicados al desarrollo de infraestructura tecnológica y modelos de IA avanzados."
-        </p>
-        <div class="inline-block p-10 glass-panel rounded-[3rem] border border-blue-500/20 relative overflow-hidden group">
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent group-hover:opacity-100 opacity-0 transition-opacity"></div>
-            <h3 class="text-blue-400 font-black tracking-[0.3em] uppercase text-[10px] mb-3 relative">LogAI Department</h3>
-            <p class="text-sm text-white font-bold uppercase tracking-widest leading-relaxed relative">Especialistas en Arquitectura <br>y Redes Neuronales</p>
         </div>
     </section>
 
     <footer class="py-20 text-center opacity-30 text-[9px] uppercase tracking-[0.5em] font-black">
-        LOGLABS &copy; 2026 — NEUROPY GENESIS ALPHA
+        LOGLABS &copy; 2026 — NEUROPY GENESIS ALPHA STAGE
     </footer>
 
 </body>
