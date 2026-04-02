@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroPy | Simple LLM Modeling</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #e5e5e5; }
+        .code-font { font-family: 'Fira Code', monospace; }
+        .gradient-text {
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .terminal-window {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="flex justify-between items-center p-6 max-w-6xl mx-auto">
+        <div class="text-xl font-bold tracking-tighter code-font">
+            <span class="text-blue-500">></span> NeuroPy
+        </div>
+        <div class="space-x-6 text-sm font-medium">
+            <a href="#docs" class="hover:text-blue-400 transition">Docs</a>
+            <a href="https://github.com/loglabsorg/NeuroPy" class="bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition">GitHub</a>
+        </div>
+    </nav>
+
+    <header class="max-w-4xl mx-auto text-center py-20 px-6">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+            Crea LLMs con la simplicidad de <span class="gradient-text">Python</span>.
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+            NeuroPy combina la arquitectura de alto rendimiento de Neuron con la flexibilidad de Python para democratizar el modelado de lenguaje masivo.
+        </p>
+        
+        <div class="terminal-window text-left max-w-2xl mx-auto overflow-hidden">
+            <div class="bg-[#222] px-4 py-2 flex space-x-2">
+                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+            </div>
+            <div class="p-6 code-font text-sm sm:text-base leading-relaxed">
+                <p class="text-gray-500"># Instalación rápida</p>
+                <p><span class="text-green-400">pip install</span> neuropy-llm</p>
+                <br>
+                <p class="text-blue-400">import <span class="text-white">neuropy</span></p>
+                <p class="text-gray-400"># Define un modelo en segundos</p>
+                <p>model = neuropy.LLM(layers=<span class="text-yellow-300">"neuron-alpha"</span>)</p>
+                <p>model.train(dataset=<span class="text-yellow-300">"custom_data"</span>)</p>
+            </div>
+        </div>
+    </header>
+
+    <section id="docs" class="max-w-6xl mx-auto py-20 px-6 grid md:grid-cols-3 gap-12">
+        <div>
+            <h3 class="text-blue-400 font-bold mb-2 uppercase text-xs tracking-widest">Tecnología</h3>
+            <h4 class="text-xl font-semibold mb-4">Core de Neuron</h4>
+            <p class="text-gray-500 leading-relaxed">Aprovecha la eficiencia de procesamiento de Neuron para manejar parámetros masivos sin degradar el rendimiento.</p>
+        </div>
+        <div>
+            <h3 class="text-blue-400 font-bold mb-2 uppercase text-xs tracking-widest">Sintaxis</h3>
+            <h4 class="text-xl font-semibold mb-4">Simplicidad Pythonic</h4>
+            <p class="text-gray-500 leading-relaxed">Diseñado para que cualquier desarrollador de Python pueda construir un LLM sin ser un experto en álgebra lineal compleja.</p>
+        </div>
+        <div>
+            <h3 class="text-blue-400 font-bold mb-2 uppercase text-xs tracking-widest">Despliegue</h3>
+            <h4 class="text-xl font-semibold mb-4">Listo para Producción</h4>
+            <p class="text-gray-500 leading-relaxed">Exporta tus modelos optimizados directamente a entornos de nube o servidores locales con un solo comando.</p>
+        </div>
+    </section>
+
+    <footer class="border-t border-[#222] py-10 text-center text-gray-600 text-sm">
+        <p>© 2026 LogLabs. Built with NeuroPy.</p>
+    </footer>
+
+</body>
+</html>
