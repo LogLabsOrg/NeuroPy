@@ -5,121 +5,273 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeuroPy | The Neuron Interface Language</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #4facfe; }
-        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #e5e5e5; scroll-behavior: smooth; overflow-x: hidden; }
+        :root { 
+            --accent: #4facfe; 
+            --accent-glow: rgba(79, 172, 254, 0.2); 
+            --bg-color: #050505;
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-color); 
+            color: #e5e5e5; 
+            scroll-behavior: smooth; 
+            overflow-x: hidden; 
+        }
+        
         .code-font { font-family: 'Fira Code', monospace; }
-        .gradient-text { background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.07); transition: all 0.3s ease; }
-        .backend-card { background: #0d0d0d; border: 1px solid #1a1a1a; transition: all 0.4s ease; border-radius: 2rem; }
-        .backend-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        
+        .gradient-text { 
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+
+        /* Glassmorphism Panel */
+        .glass-panel { 
+            background: rgba(255, 255, 255, 0.02); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.06); 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            border-radius: 1.5rem;
+        }
+        .glass-panel:hover { 
+            background: rgba(255, 255, 255, 0.04); 
+            border-color: rgba(79, 172, 254, 0.3); 
+            box-shadow: 0 10px 40px var(--accent-glow); 
+        }
+
+        /* Backend Cards */
+        .backend-card { 
+            background: #0a0a0a; 
+            border: 1px solid #1a1a1a; 
+            border-radius: 1.5rem; 
+            padding: 2.5rem; 
+            transition: all 0.4s ease; 
+            position: relative;
+            overflow: hidden;
+        }
+        .backend-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .backend-card:hover { 
+            border-color: #2a2a2a; 
+            transform: translateY(-4px); 
+        }
+        .backend-card:hover::before { opacity: 1; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #333; }
+        
+        /* Terminal Syntax Highlights */
+        .syn-keyword { color: #c678dd; } /* Purple */
+        .syn-function { color: #61afef; } /* Blue */
+        .syn-string { color: #98c379; } /* Green */
+        .syn-comment { color: #5c6370; font-style: italic; } /* Gray */
+        .syn-number { color: #d19a66; } /* Orange */
     </style>
 </head>
-<body class="antialiased relative min-h-screen">
+<body class="antialiased flex flex-col min-h-screen">
 
-    <nav class="fixed top-0 left-0 right-0 z-[200] border-b border-white/5 bg-[#050505]/80 backdrop-blur-xl">
+    <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#050505]/70 backdrop-blur-xl transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="text-xl font-bold tracking-tighter code-font">
-                    <span class="text-blue-500">>_</span> NeuroPy
-                </div>
+            <div class="flex items-center select-none">
+                <span class="text-xl font-bold tracking-tighter">
+                    <span class="text-[#4facfe] code-font">&gt;_</span> 
+                    <span class="italic ml-1">NeuroPy</span>
+                </span>
             </div>
-            <div class="flex items-center bg-white/5 rounded-full p-1 border border-white/10">
-                <button onclick="setLanguage('es')" id="btn-es" class="px-4 py-1.5 bg-white text-black text-[9px] font-black rounded-full transition">ES</button>
-                <button onclick="setLanguage('en')" id="btn-en" class="px-4 py-1.5 text-gray-400 text-[9px] font-black hover:text-white transition">EN</button>
+            
+            <div class="flex items-center bg-white/5 rounded-full p-1 border border-white/10 backdrop-blur-md">
+                <button onclick="setLanguage('es')" id="btn-es" class="px-4 py-1.5 bg-white text-black text-[10px] font-black rounded-full transition-all shadow-md">ES</button>
+                <button onclick="setLanguage('en')" id="btn-en" class="px-4 py-1.5 text-gray-400 text-[10px] font-black hover:text-white transition-all">EN</button>
             </div>
         </div>
     </nav>
 
-    <section class="pt-48 pb-20 px-6 text-center relative">
-        <div class="max-w-5xl mx-auto relative z-10">
-            <div class="inline-block px-4 py-1 mb-8 border border-blue-500/20 rounded-full bg-blue-500/5 text-blue-400 text-[10px] font-black tracking-[0.3em] uppercase animate-pulse">
-                LogAI Genesis — Alpha 0.3.0
+    <header class="pt-48 pb-20 px-6 text-center relative overflow-hidden flex-grow flex flex-col justify-center">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#4facfe]/10 blur-[120px] rounded-full pointer-events-none"></div>
+        
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 mb-10 border border-[#4facfe]/20 rounded-full bg-[#4facfe]/5 backdrop-blur-sm shadow-[0_0_15px_rgba(79,172,254,0.1)]">
+                <span class="w-2 h-2 bg-[#4facfe] rounded-full animate-pulse"></span>
+                <span class="text-[#4facfe] text-[10px] font-black tracking-[0.25em] uppercase" id="hero-badge">Alpha Release 0.3.0</span>
             </div>
-            <h1 class="text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] italic mb-10" id="hero-title">
+            
+            <h1 class="text-6xl md:text-8xl lg:text-[9rem] font-black tracking-tighter leading-[0.9] italic mb-8">
                 Neuro<span class="gradient-text">Py.</span>
             </h1>
-            <p class="max-w-2xl mx-auto text-gray-500 text-lg md:text-xl font-medium mb-12" id="hero-desc">
-                La capa de comunicación nativa para el ecosistema Neuron. Desarrollado por LogLabs.
+            
+            <p class="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl font-medium mb-12 leading-relaxed" id="hero-desc">
+                El lenguaje de interfaz nativo para el ecosistema <span class="text-white italic">Neuron</span>. Optimizado para interactuar fluidamente con la arquitectura Cleo 4K6L.
             </p>
+            
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#" class="w-full sm:w-auto bg-white text-black px-10 py-4 rounded-xl font-black text-xs tracking-widest hover:bg-blue-400 hover:text-white transition uppercase">Instalar</a>
-                <a href="#" class="w-full sm:w-auto bg-[#111] border border-white/10 text-white px-10 py-4 rounded-xl font-black text-xs tracking-widest flex items-center justify-center hover:border-blue-500 transition">
-                    <svg class="w-4 h-4 mr-3 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .327 8.74l4.256 3.26-4.256 3.26a1 1 0 0 0 0 1.479l1.322 1.201a1 1 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.494 1.494 0 0 0 1.705.29l4.94-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
+                <a href="#" class="w-full sm:w-auto bg-white text-black px-8 py-4 rounded-xl font-black text-[11px] tracking-[0.15em] hover:bg-gray-200 hover:scale-105 transition-all duration-300 uppercase shadow-[0_0_20px_rgba(255,255,255,0.1)]" id="btn-install">
+                    Instalar Alpha
+                </a>
+                <a href="#" class="w-full sm:w-auto bg-transparent border border-white/10 text-white px-8 py-4 rounded-xl font-black text-[11px] tracking-[0.15em] flex items-center justify-center hover:border-white/30 hover:bg-white/5 transition-all duration-300 uppercase">
+                    <svg class="w-4 h-4 mr-3 text-[#4facfe]" viewBox="0 0 24 24" fill="currentColor"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .327 8.74l4.256 3.26-4.256 3.26a1 1 0 0 0 0 1.479l1.322 1.201a1 1 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.494 1.494 0 0 0 1.705.29l4.94-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
                     VS Code Extension
                 </a>
             </div>
         </div>
-    </section>
+    </header>
 
-    <section class="max-w-6xl mx-auto py-20 px-6 border-t border-white/5">
-        <h2 class="text-3xl font-black mb-16 italic" id="specs-title">Backends Integrados</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="backend-card p-10">
-                <div class="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center mb-6 font-black text-blue-500">P</div>
-                <h3 class="text-xl font-bold mb-4 italic">PyTorch</h3>
-                <p class="text-gray-500 text-sm leading-relaxed" id="py-desc">Optimización nativa para el entrenamiento de modelos Cleo.</p>
+    <section class="max-w-4xl mx-auto px-6 w-full mb-32 relative z-20">
+        <div class="glass-panel p-6 md:p-10 shadow-2xl">
+            <div class="flex items-center space-x-2 mb-6 pb-6 border-b border-white/5">
+                <div class="w-3 h-3 bg-[#ff5f56] rounded-full"></div>
+                <div class="w-3 h-3 bg-[#ffbd2e] rounded-full"></div>
+                <div class="w-3 h-3 bg-[#27c93f] rounded-full"></div>
+                <div class="ml-4 text-[10px] text-gray-500 font-mono tracking-widest">cleo_init.npy — NeuroPy Core</div>
             </div>
-            <div class="backend-card p-10 border-purple-500/20">
-                <div class="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center mb-6 font-black text-purple-500">H</div>
-                <h3 class="text-xl font-bold mb-4 italic">HuggingFace</h3>
-                <p class="text-gray-500 text-sm leading-relaxed" id="hf-desc">Conectividad directa para despliegue global de modelos.</p>
-            </div>
-            <div class="backend-card p-10">
-                <div class="w-10 h-10 bg-green-500/10 rounded-lg flex items-center justify-center mb-6 font-black text-green-500">V</div>
-                <h3 class="text-xl font-bold mb-4 italic">NeuroViz</h3>
-                <p class="text-gray-500 text-sm leading-relaxed" id="viz-desc">Dashboard para visualización de grafos neuronales.</p>
+            
+            <div class="code-font text-sm md:text-base leading-[1.8] overflow-x-auto text-gray-300">
+                <div><span class="syn-comment"># Inicializando arquitectura Core de LogLabs</span></div>
+                <div class="mt-2"><span class="syn-keyword">import</span> <span class="text-white">Neuron.core</span> <span class="syn-keyword">as</span> <span class="text-white">nc</span></div>
+                <div><span class="syn-keyword">import</span> <span class="text-white">LogLabs.models.cleo</span> <span class="syn-keyword">as</span> <span class="text-white">cleo</span></div>
+                <br>
+                <div><span class="syn-comment"># Configuración del modelo 67M</span></div>
+                <div><span class="syn-function">def</span> <span class="text-white">deploy_model</span>():</div>
+                <div class="pl-8">model <span class="syn-keyword">=</span> cleo.<span class="syn-function">create</span>(</div>
+                <div class="pl-16">name<span class="syn-keyword">=</span><span class="syn-string">"Cleo_4K6L"</span>,</div>
+                <div class="pl-16">parameters<span class="syn-keyword">=</span><span class="syn-number">67000000</span>,</div>
+                <div class="pl-16">context_window<span class="syn-keyword">=</span><span class="syn-number">4096</span>,</div>
+                <div class="pl-16">precision<span class="syn-keyword">=</span><span class="syn-string">"bf16"</span></div>
+                <div class="pl-8">)</div>
+                <div class="pl-8"><span class="syn-keyword">return</span> model.<span class="syn-function">compile</span>(backend<span class="syn-keyword">=</span><span class="syn-string">"pytorch"</span>)</div>
+                <br>
+                <div><span class="syn-keyword">if</span> __name__ <span class="syn-keyword">==</span> <span class="syn-string">"__main__"</span>:</div>
+                <div class="pl-8">core_instance <span class="syn-keyword">=</span> <span class="syn-function">deploy_model</span>()</div>
+                <div class="pl-8">core_instance.<span class="syn-function">listen</span>(port<span class="syn-keyword">=</span><span class="syn-number">8080</span>)</div>
             </div>
         </div>
     </section>
 
-    <footer class="py-20 text-center border-t border-white/5 opacity-80 px-6 mt-auto">
-        <p class="text-[9px] font-black uppercase tracking-[0.5em] mb-4 text-gray-600">
-            &copy; 2026 LogLabs — LogAI Research Dept.
-        </p>
-        <div class="mt-8">
-            <p class="text-[8px] font-black text-gray-800 uppercase tracking-widest mb-1 italic">Ecosistema</p>
-            <p class="text-4xl font-black italic text-white tracking-tighter opacity-20">INSERLOFT</p>
+    <section class="max-w-6xl mx-auto px-6 mb-32 w-full">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-black italic mb-4" id="modules-title">Backends Soportados</h2>
+            <p class="text-gray-500 text-xs font-black tracking-[0.3em] uppercase">Integración Nativa</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="backend-card group">
+                <div class="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center mb-6">
+                    <svg class="w-6 h-6 text-orange-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12.022 0C5.385 0 0 5.385 0 12.022s5.385 12.022 12.022 12.022 12.022-5.385 12.022-12.022S18.66 0 12.022 0zm0 2.228c5.408 0 9.794 4.386 9.794 9.794 0 5.408-4.386 9.794-9.794 9.794-5.408 0-9.794-4.386-9.794-9.794 0-5.408 4.386-9.794 9.794-9.794zM7.228 6.57v10.903h2.368V6.57H7.228zm6.544 0v10.903h2.368V6.57h-2.368z"/></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">PyTorch</h3>
+                <p class="text-gray-500 text-sm leading-relaxed" id="py-desc">Motor principal de inferencia. Optimización de tensores y gestión de memoria nativa para la arquitectura de grafos de Cleo.</p>
+            </div>
+            
+            <div class="backend-card group">
+                <div class="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center mb-6">
+                    <span class="text-2xl">🤗</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3">HuggingFace</h3>
+                <p class="text-gray-500 text-sm leading-relaxed" id="hf-desc">Conectividad directa con el Hub. Permite importar y exportar pesos de modelos compatibles con GGUF y Safetensors.</p>
+            </div>
+            
+            <div class="backend-card group">
+                <div class="w-12 h-12 bg-[#4facfe]/10 rounded-xl flex items-center justify-center mb-6">
+                    <svg class="w-6 h-6 text-[#4facfe]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">NeuroViz</h3>
+                <p class="text-gray-500 text-sm leading-relaxed" id="viz-desc">Dashboard propietario para telemetría. Visualización de la red neuronal, consumo de tokens y métricas de rendimiento en tiempo real.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-4xl mx-auto px-6 mb-32 w-full text-center border-t border-white/5 pt-20">
+        <h2 class="text-xl font-black mb-10 italic uppercase tracking-widest text-gray-400" id="social-title">Red de Conectividad</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="https://x.com/LogLabsHQ" target="_blank" class="glass-panel py-6 px-4 flex flex-col items-center group">
+                <svg class="w-5 h-5 text-gray-400 group-hover:text-white transition-colors mb-3" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.005 4.15H5.059z"/></svg>
+                <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Startup HQ</span>
+                <span class="text-sm font-black text-gray-200 group-hover:text-[#4facfe] transition-colors">@LogLabsHQ</span>
+            </a>
+            <a href="https://x.com/LogAILabs" target="_blank" class="glass-panel py-6 px-4 flex flex-col items-center group">
+                <svg class="w-5 h-5 text-gray-400 group-hover:text-white transition-colors mb-3" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.005 4.15H5.059z"/></svg>
+                <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Research Div.</span>
+                <span class="text-sm font-black text-gray-200 group-hover:text-[#4facfe] transition-colors">@LogAILabs</span>
+            </a>
+            <a href="https://x.com/Inserloft" target="_blank" class="glass-panel py-6 px-4 flex flex-col items-center group">
+                <svg class="w-5 h-5 text-gray-400 group-hover:text-white transition-colors mb-3" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.005 4.15H5.059z"/></svg>
+                <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Parent Holding</span>
+                <span class="text-sm font-black text-gray-200 group-hover:text-[#4facfe] transition-colors italic">@Inserloft</span>
+            </a>
+        </div>
+    </section>
+
+    <footer class="w-full mt-auto text-center pb-12 px-6">
+        <div class="mb-12">
+            <p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-600">
+                &copy; 2026 LogLabs Architecture.
+            </p>
+        </div>
+        
+        <div class="select-none pointer-events-none flex flex-col items-center justify-center">
+            <span class="text-[9px] font-black uppercase tracking-[0.6em] text-gray-700 mb-2 italic">Ecosistema</span>
+            <span class="text-5xl md:text-7xl font-black italic opacity-20 tracking-tighter text-white">
+                INSERLOFT
+            </span>
         </div>
     </footer>
 
     <script>
-        const translations = {
+        const content = {
             es: {
-                heroTitle: 'Neuro<span class="gradient-text">Py.</span>',
-                heroDesc: 'La capa de comunicación nativa para el ecosistema Neuron. Desarrollado por LogLabs.',
-                specsTitle: 'Backends Integrados',
-                pyDesc: 'Optimización nativa para el entrenamiento de modelos Cleo.',
-                hfDesc: 'Conectividad directa para despliegue global de modelos.',
-                vizDesc: 'Dashboard para visualización de grafos neuronales.'
+                heroDesc: 'El lenguaje de interfaz nativo para el ecosistema <span class="text-white italic">Neuron</span>. Optimizado para interactuar fluidamente con la arquitectura Cleo 4K6L.',
+                btnInstall: 'Instalar Alpha',
+                modulesTitle: 'Backends Soportados',
+                pyDesc: 'Motor principal de inferencia. Optimización de tensores y gestión de memoria nativa para la arquitectura de grafos de Cleo.',
+                hfDesc: 'Conectividad directa con el Hub. Permite importar y exportar pesos de modelos compatibles con GGUF y Safetensors.',
+                vizDesc: 'Dashboard propietario para telemetría. Visualización de la red neuronal, consumo de tokens y métricas de rendimiento en tiempo real.',
+                socialTitle: 'Red de Conectividad'
             },
             en: {
-                heroTitle: 'Neuro<span class="gradient-text">Py.</span>',
-                heroDesc: 'The native communication layer for the Neuron ecosystem. Developed by LogLabs.',
-                specsTitle: 'Integrated Backends',
-                pyDesc: 'Native optimization for Cleo model training.',
-                hfDesc: 'Direct connectivity for global model deployment.',
-                vizDesc: 'Dashboard for neural graph visualization.'
+                heroDesc: 'The native interface language for the <span class="text-white italic">Neuron</span> ecosystem. Optimized to interact seamlessly with the Cleo 4K6L architecture.',
+                btnInstall: 'Install Alpha',
+                modulesTitle: 'Supported Backends',
+                pyDesc: 'Core inference engine. Native tensor optimization and memory management for Cleo\'s graph architecture.',
+                hfDesc: 'Direct connectivity to the Hub. Allows importing and exporting model weights compatible with GGUF and Safetensors.',
+                vizDesc: 'Proprietary dashboard for telemetry. Real-time visualization of the neural network, token consumption, and performance metrics.',
+                socialTitle: 'Connectivity Network'
             }
         };
 
         function setLanguage(lang) {
-            const t = translations[lang];
-            document.getElementById('hero-title').innerHTML = t.heroTitle;
-            document.getElementById('hero-desc').innerText = t.heroDesc;
-            document.getElementById('specs-title').innerText = t.specsTitle;
+            // Actualizar textos
+            const t = content[lang];
+            document.getElementById('hero-desc').innerHTML = t.heroDesc;
+            document.getElementById('btn-install').innerText = t.btnInstall;
+            document.getElementById('modules-title').innerText = t.modulesTitle;
             document.getElementById('py-desc').innerText = t.pyDesc;
             document.getElementById('hf-desc').innerText = t.hfDesc;
             document.getElementById('viz-desc').innerText = t.vizDesc;
+            document.getElementById('social-title').innerText = t.socialTitle;
+
+            // Actualizar UI de botones
             const btnEs = document.getElementById('btn-es');
             const btnEn = document.getElementById('btn-en');
+            
             if (lang === 'es') {
-                btnEs.className = 'px-4 py-1.5 bg-white text-black text-[9px] font-black rounded-full transition';
-                btnEn.className = 'px-4 py-1.5 text-gray-400 text-[9px] font-black hover:text-white transition';
+                btnEs.className = 'px-4 py-1.5 bg-white text-black text-[10px] font-black rounded-full transition-all shadow-md';
+                btnEn.className = 'px-4 py-1.5 text-gray-400 text-[10px] font-black hover:text-white transition-all';
             } else {
-                btnEn.className = 'px-4 py-1.5 bg-white text-black text-[9px] font-black rounded-full transition';
-                btnEs.className = 'px-4 py-1.5 text-gray-400 text-[9px] font-black hover:text-white transition';
+                btnEn.className = 'px-4 py-1.5 bg-white text-black text-[10px] font-black rounded-full transition-all shadow-md';
+                btnEs.className = 'px-4 py-1.5 text-gray-400 text-[10px] font-black hover:text-white transition-all';
             }
         }
     </script>
