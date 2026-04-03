@@ -15,26 +15,18 @@
         .backend-card { background: #0d0d0d; border: 1px solid #1a1a1a; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 2.5rem; }
         .backend-card:hover { border-color: var(--accent); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(79, 172, 254, 0.1); }
         .syn-kw { color: #c678dd; } .syn-fn { color: #61afef; } .syn-str { color: #98c379; } .syn-num { color: #d19a66; }
-        
-        /* Estilos para botones de idioma */
-        .btn-lang { transition: all 0.3s ease; }
-        .btn-active { background-color: white; color: black; }
-        .btn-inactive { color: #9ca3af; }
-        .btn-inactive:hover { color: white; }
     </style>
 </head>
 <body class="antialiased selection:bg-blue-500/30">
 
     <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-[#050505]/80 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-8 h-24 flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <div class="text-2xl font-bold tracking-tighter code-font">
-                    <span class="text-[#4facfe]">>_</span> NeuroPy
-                </div>
+            <div class="text-2xl font-bold tracking-tighter code-font">
+                <span class="text-[#4facfe]">>_</span> NeuroPy
             </div>
             <div class="flex items-center bg-white/5 rounded-full p-1.5 border border-white/10">
-                <button onclick="setLanguage('es')" id="btn-es" class="btn-lang btn-active px-5 py-2 text-[10px] font-black rounded-full">ES</button>
-                <button onclick="setLanguage('en')" id="btn-en" class="btn-lang btn-inactive px-5 py-2 text-[10px] font-black rounded-full">EN</button>
+                <button onclick="setLanguage('es')" id="btn-es" class="px-5 py-2 bg-white text-black text-[10px] font-black rounded-full transition-all">ES</button>
+                <button onclick="setLanguage('en')" id="btn-en" class="px-5 py-2 text-gray-400 text-[10px] font-black hover:text-white transition-all">EN</button>
             </div>
         </div>
     </nav>
@@ -48,12 +40,15 @@
             <h1 class="text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] italic mb-12">
                 Neuro<span class="gradient-text">Py.</span>
             </h1>
-            <p class="max-w-2xl mx-auto text-gray-500 text-xl font-medium mb-16" id="hero-desc">
-                Capa de comunicación nativa para el ecosistema <span class="text-white italic">Neuron</span>. Desarrollado por LogLabs.
+            <p id="hero-desc" class="max-w-2xl mx-auto text-gray-500 text-xl font-medium mb-16 italic leading-relaxed">
+                Capa de comunicación nativa para el ecosistema Neuron. Desarrollado por LogLabs.
             </p>
+            
             <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
-                <a href="#" id="btn-install" class="w-full sm:w-auto bg-white text-black px-12 py-5 rounded-2xl font-black text-xs tracking-widest hover:invert transition-all uppercase">Instalar</a>
-                <a href="#" class="w-full sm:w-auto bg-[#111] border border-white/10 text-white px-12 py-5 rounded-2xl font-black text-xs tracking-widest flex items-center justify-center hover:border-blue-500 transition-all">
+                <a href="https://github.com/LogLabsOrg/NeuroPy/archive/refs/heads/main.zip" id="main-download" class="w-full sm:w-auto bg-white text-black px-12 py-5 rounded-2xl font-black text-xs tracking-widest hover:invert transition-all uppercase shadow-2xl shadow-white/10">
+                    Instalar
+                </a>
+                <a href="https://marketplace.visualstudio.com" target="_blank" id="vs-extension" class="w-full sm:w-auto bg-[#111] border border-white/10 text-white px-12 py-5 rounded-2xl font-black text-xs tracking-widest flex items-center justify-center hover:border-blue-500 transition-all">
                     <svg class="w-5 h-5 mr-3 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .327 8.74l4.256 3.26-4.256 3.26a1 1 0 0 0 0 1.479l1.322 1.201a1 1 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.494 1.494 0 0 0 1.705.29l4.94-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
                     VS CODE EXTENSION
                 </a>
@@ -61,105 +56,75 @@
         </div>
     </section>
 
-    <section class="max-w-4xl mx-auto px-8 mb-40">
-        <div class="glass-panel p-8 md:p-12 border-white/10">
-            <div class="flex items-center space-x-2 mb-8 opacity-50">
-                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span class="ml-4 text-[10px] code-font uppercase tracking-widest">cleo_runtime.npy</span>
-            </div>
-            <div class="code-font text-sm md:text-base leading-relaxed text-gray-400">
-                <div><span class="syn-kw">from</span> neuropy <span class="syn-kw">import</span> NeuronEngine</div>
-                <div><span class="syn-kw">from</span> loglabs.cleo <span class="syn-kw">import</span> Cleo4K6L</div>
-                <br>
-                <div>model = Cleo4K6L(params=<span class="syn-num">67_000_000</span>)</div>
-                <div>engine = NeuronEngine(backend=<span class="syn-str">"pytorch"</span>)</div>
-                <br>
-                <div><span class="syn-kw">if</span> engine.status == <span class="syn-str">"ready"</span>:</div>
-                <div class="pl-8">engine.deploy(model)</div>
-                <div class="pl-8"><span id="terminal-out" class="syn-fn">print</span>(<span class="syn-str">">_ NeuroPy: Cleo is Online"</span>)</div>
-            </div>
-        </div>
-    </section>
-
     <section class="max-w-6xl mx-auto px-8 mb-40">
-        <h2 class="text-4xl font-black mb-20 italic tracking-tighter" id="specs-title">Backends Integrados</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <h2 id="specs-title" class="text-4xl font-black mb-20 italic tracking-tighter">Backends Integrados</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
             <div class="backend-card p-12">
-                <div class="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 font-black text-blue-500 italic">P</div>
-                <h3 class="text-2xl font-bold mb-4 italic tracking-tight">PyTorch</h3>
-                <p class="text-gray-500 text-sm leading-relaxed" id="py-desc">Optimización nativa para el entrenamiento de modelos Cleo y gestión eficiente de tensores en tiempo real.</p>
+                <h3 class="text-2xl font-bold mb-4 italic">PyTorch</h3>
+                <p id="desc-py" class="text-gray-500 leading-relaxed">Optimización nativa para el entrenamiento de modelos Cleo y gestión eficiente de tensores.</p>
             </div>
             <div class="backend-card p-12">
-                <div class="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-8 font-black text-purple-500 italic">H</div>
-                <h3 class="text-2xl font-bold mb-4 italic tracking-tight">HuggingFace</h3>
-                <p class="text-gray-500 text-sm leading-relaxed" id="hf-desc">Conectividad directa para el despliegue global de modelos GGUF y gestión de repositorios mediante API.</p>
+                <h3 class="text-2xl font-bold mb-4 italic">HuggingFace</h3>
+                <p id="desc-hf" class="text-gray-500 leading-relaxed">Conectividad directa para el despliegue global de modelos GGUF mediante API.</p>
             </div>
             <div class="backend-card p-12">
-                <div class="w-12 h-12 bg-green-500/10 rounded-2xl flex items-center justify-center mb-8 font-black text-green-500 italic">V</div>
-                <h3 class="text-2xl font-bold mb-4 italic tracking-tight">NeuroViz</h3>
-                <p class="text-gray-500 text-sm leading-relaxed" id="viz-desc">Dashboard avanzado para visualización de grafos neuronales y métricas de rendimiento en vivo.</p>
+                <h3 class="text-2xl font-bold mb-4 italic">NeuroViz</h3>
+                <p id="desc-viz" class="text-gray-500 leading-relaxed">Dashboard avanzado para visualización de grafos neuronales y métricas en vivo.</p>
             </div>
         </div>
     </section>
 
-    <footer class="py-32 text-center border-t border-white/5 bg-gradient-to-b from-transparent to-black">
-        <div class="max-w-7xl mx-auto px-8">
-            <div class="flex flex-col items-center">
-                <p class="text-[10px] font-black uppercase tracking-[0.6em] mb-12 text-gray-600">
-                    &copy; 2026 LogLabs — LogAI Research Dept.
-                </p>
-                <div class="opacity-20 transition-opacity hover:opacity-40 duration-700">
-                    <p id="footer-label" class="text-[9px] font-black text-gray-700 uppercase tracking-[1em] mb-3 italic">Ecosistema</p>
-                    <p class="text-6xl md:text-8xl font-black italic text-white tracking-tighter">INSERLOFT</p>
-                </div>
-            </div>
-        </div>
+    <footer class="py-20 text-center border-t border-white/5">
+        <p class="text-[10px] font-black uppercase tracking-[0.6em] text-gray-600 mb-4">&copy; 2026 LogLabs — INSERLOFT</p>
     </footer>
 
     <script>
-        const tr = {
+        const content = {
             es: {
-                heroDesc: 'Capa de comunicación nativa para el ecosistema <span class="text-white italic">Neuron</span>. Desarrollado por LogLabs.',
-                btnInstall: 'INSTALAR',
-                specsTitle: 'Backends Integrados',
-                pyDesc: 'Optimización nativa para el entrenamiento de modelos Cleo y gestión eficiente de tensores en tiempo real.',
-                hfDesc: 'Conectividad directa para el despliegue global de modelos GGUF y gestión de repositorios mediante API.',
-                vizDesc: 'Dashboard avanzado para visualización de grafos neuronales y métricas de rendimiento en vivo.',
-                footerLabel: 'Ecosistema'
+                hero: "Capa de comunicación nativa para el ecosistema Neuron. Desarrollado por LogLabs.",
+                install: "Instalar",
+                vs: "VS CODE EXTENSION",
+                specs: "Backends Integrados",
+                py: "Optimización nativa para el entrenamiento de modelos Cleo y gestión eficiente de tensores.",
+                hf: "Conectividad directa para el despliegue global de modelos GGUF mediante API.",
+                viz: "Dashboard avanzado para visualización de grafos neuronales y métricas en vivo."
             },
             en: {
-                heroDesc: 'Native communication layer for the <span class="text-white italic">Neuron</span> ecosystem. Developed by LogLabs.',
-                btnInstall: 'INSTALL',
-                specsTitle: 'Integrated Backends',
-                pyDesc: 'Native optimization for Cleo model training and efficient real-time tensor management.',
-                hfDesc: 'Direct connectivity for global GGUF model deployment and API-based repository management.',
-                vizDesc: 'Advanced dashboard for neural graph visualization and live performance metrics.',
-                footerLabel: 'Ecosystem'
+                hero: "Native communication layer for the Neuron ecosystem. Developed by LogLabs.",
+                install: "Install Now",
+                vs: "VS CODE EXTENSION",
+                specs: "Integrated Backends",
+                py: "Native optimization for Cleo model training and efficient tensor management.",
+                hf: "Direct connectivity for global GGUF model deployment via API.",
+                viz: "Advanced dashboard for neural graph visualization and live metrics."
             }
         };
 
         function setLanguage(lang) {
-            // Actualizar contenido
-            document.getElementById('hero-desc').innerHTML = tr[lang].heroDesc;
-            document.getElementById('btn-install').innerText = tr[lang].btnInstall;
-            document.getElementById('specs-title').innerText = tr[lang].specsTitle;
-            document.getElementById('py-desc').innerText = tr[lang].pyDesc;
-            document.getElementById('hf-desc').innerText = tr[lang].hfDesc;
-            document.getElementById('viz-desc').innerText = tr[lang].vizDesc;
-            document.getElementById('footer-label').innerText = tr[lang].footerLabel;
+            // Cambiar Textos Hero
+            document.getElementById('hero-desc').innerText = content[lang].hero;
+            document.getElementById('main-download').innerText = content[lang].install;
+            document.getElementById('vs-extension').innerHTML = `
+                <svg class="w-5 h-5 mr-3 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .327 8.74l4.256 3.26-4.256 3.26a1 1 0 0 0 0 1.479l1.322 1.201a1 1 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.494 1.494 0 0 0 1.705.29l4.94-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
+                ${content[lang].vs}
+            `;
 
-            // Actualizar estado de los botones
-            const btnEs = document.getElementById('btn-es');
-            const btnEn = document.getElementById('btn-en');
+            // Cambiar Textos Backends
+            document.getElementById('specs-title').innerText = content[lang].specs;
+            document.getElementById('desc-py').innerText = content[lang].py;
+            document.getElementById('desc-hf').innerText = content[lang].hf;
+            document.getElementById('desc-viz').innerText = content[lang].viz;
 
-            if (lang === 'es') {
-                btnEs.classList.replace('btn-inactive', 'btn-active');
-                btnEn.classList.replace('btn-active', 'btn-inactive');
+            // Cambiar Estados de los Botones de la Nav
+            const es = document.getElementById('btn-es');
+            const en = document.getElementById('btn-en');
+
+            if(lang === 'es') {
+                es.className = "px-5 py-2 bg-white text-black text-[10px] font-black rounded-full transition-all";
+                en.className = "px-5 py-2 text-gray-400 text-[10px] font-black hover:text-white transition-all";
             } else {
-                btnEn.classList.replace('btn-inactive', 'btn-active');
-                btnEs.classList.replace('btn-active', 'btn-inactive');
+                en.className = "px-5 py-2 bg-white text-black text-[10px] font-black rounded-full transition-all";
+                es.className = "px-5 py-2 text-gray-400 text-[10px] font-black hover:text-white transition-all";
             }
         }
     </script>
