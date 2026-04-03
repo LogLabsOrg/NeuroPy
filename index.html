@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeuroPy | The Neuron Interface Language</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root { --accent: #4facfe; --accent-glow: rgba(79, 172, 254, 0.3); }
         body { font-family: 'Inter', sans-serif; background-color: #050505; color: #e5e5e5; scroll-behavior: smooth; overflow-x: hidden; }
@@ -42,15 +42,9 @@
         ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #222; }
 
-        .inserloft-seal {
-            position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;
-            text-align: right; opacity: 0.3; transition: opacity 0.5s ease;
-            pointer-events: none;
-        }
-        @media (max-width: 768px) { .inserloft-seal { bottom: 1rem; right: 1rem; opacity: 0.2; scale: 0.8; } }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased relative min-h-screen">
 
     <nav class="fixed top-0 left-0 right-0 z-[200] border-b border-white/5 bg-[#050505]/80 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -81,11 +75,11 @@
                 <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
                 <span class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">LogAI Genesis Alpha v0.3.0</span>
             </div>
-            <h1 class="text-6xl md:text-[9rem] font-black tracking-tighter leading-[0.85] italic mb-10" id="hero-title">
-                Neural <br><span class="gradient-text">Protocol.</span>
+            <h1 class="text-7xl md:text-[9rem] font-black tracking-tighter leading-[0.85] italic mb-10" id="hero-title">
+                The Neuron Interface<br><span class="gradient-text">Language.</span>
             </h1>
             <p class="max-w-2xl mx-auto text-gray-500 text-lg md:text-2xl font-medium mb-16 leading-relaxed" id="hero-desc">
-                La capa de comunicación nativa para el ecosistema <span class="text-white italic">Neuron</span>. Desarrollado por LogLabs bajo el sello de Inserloft.
+                Simplifica la arquitectura de modelos Neuron complejos. El lenguaje nativo del ecosistema <span class="text-white italic">LogLabs</span>.
             </p>
             
             <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -156,7 +150,7 @@
         </div>
     </section>
 
-    <section class="max-w-6xl mx-auto py-32 px-6 border-t border-white/5 text-center">
+    <section id="network" class="max-w-6xl mx-auto py-32 px-6 border-t border-white/5 text-center mb-40">
         <h2 class="text-3xl font-black mb-16 italic italic">X Connectivity</h2>
         <div class="grid sm:grid-cols-3 gap-6">
             <a href="https://x.com/LogLabsHQ" target="_blank" class="glass-panel p-10 rounded-[2.5rem] group">
@@ -174,39 +168,33 @@
         </div>
     </section>
 
-    <footer class="py-40 text-center border-t border-white/5 px-6">
+    <footer class="py-20 text-center border-t border-white/5 px-6 mt-auto">
+        <div class="inserloft-seal-static text-center mb-10">
+            <p class="text-[9px] font-black text-gray-800 uppercase tracking-[0.5em] mb-1 italic">Operado por</p>
+            <p class="text-4xl font-black italic text-white tracking-tighter hover:text-blue-500 transition duration-700">
+                INSERLOFT
+            </p>
+        </div>
         <div class="max-w-4xl mx-auto">
             <p class="text-[10px] font-black uppercase tracking-[0.8em] text-gray-700 mb-8 italic">
                 LogLabs &copy; 2026. All Rights Reserved.
             </p>
-            <div class="flex flex-wrap justify-center gap-8 text-[9px] font-bold text-gray-800 uppercase tracking-widest italic">
-                <span>NeuroPy Engine</span>
-                <span class="text-blue-500/20">•</span>
-                <span>Neuron Core</span>
-                <span class="text-blue-500/20">•</span>
-                <span>Inserloft Group</span>
-            </div>
         </div>
     </footer>
-
-    <div class="inserloft-seal">
-        <p class="text-[9px] font-black text-gray-800 uppercase tracking-[0.5em] mb-1 italic">Ecosistema</p>
-        <p class="text-4xl font-black italic text-white tracking-tighter">INSERLOFT</p>
-    </div>
 
     <script>
         const content = {
             es: {
-                heroTitle: 'Neural <br><span class="gradient-text">Protocol.</span>',
-                heroDesc: 'La capa de comunicación nativa para el ecosistema <span class="text-white italic">Neuron</span>. Desarrollado por LogLabs bajo el sello de Inserloft.',
+                heroTitle: 'The Neuron Interface<br><span class="gradient-text">Language.</span>',
+                heroDesc: 'Simplifica la arquitectura de modelos Neuron complejos. El lenguaje nativo del ecosistema <span class="text-white italic">LogLabs</span>.',
                 specsTitle: 'Backends Integrados',
                 pyDesc: 'Optimización nativa para el entrenamiento de modelos Cleo y gestión de tensores.',
                 hfDesc: 'Conectividad directa con HuggingFace para despliegue global de modelos GGUF.',
                 vizDesc: 'Dashboard NeuroViz para visualización de grafos neuronales y métricas en tiempo real.'
             },
             en: {
-                heroTitle: 'Neural <br><span class="gradient-text">Protocol.</span>',
-                heroDesc: 'The native communication layer for the <span class="text-white italic">Neuron</span> ecosystem. Developed by LogLabs under Inserloft infrastructure.',
+                heroTitle: 'The Neuron Interface<br><span class="gradient-text">Language.</span>',
+                heroDesc: 'Simplifies complex Neuron model architecture. The native language of the <span class="text-white italic">LogLabs</span> ecosystem.',
                 specsTitle: 'Integrated Backends',
                 pyDesc: 'Native optimization for Cleo model training and tensor management.',
                 hfDesc: 'Direct HuggingFace connectivity for global deployment of GGUF models.',
