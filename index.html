@@ -5,152 +5,233 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeuroPy | The Neuron Interface Language</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #4facfe; }
+        :root { --accent: #4facfe; --accent-glow: rgba(79, 172, 254, 0.3); }
         body { font-family: 'Inter', sans-serif; background-color: #050505; color: #e5e5e5; scroll-behavior: smooth; overflow-x: hidden; }
         .code-font { font-family: 'Fira Code', monospace; }
-        .gradient-text { background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.07); transition: all 0.3s ease; }
-        .backend-card { background: #0d0d0d; border: 1px solid #1a1a1a; transition: all 0.4s ease; }
-        .backend-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .inserloft-seal { position: fixed; bottom: 2rem; right: 2rem; z-index: 1000; opacity: 0.2; pointer-events: none; text-align: right; }
-        @media (max-width: 640px) { .inserloft-seal { bottom: 1rem; right: 1rem; scale: 0.8; } }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .backend-card {
+            background: #0d0d0d; border: 1px solid #1a1a1a;
+            border-radius: 2rem; padding: 2.5rem;
+            transition: all 0.4s ease;
+        }
+        .backend-card:hover { border-color: var(--accent); transform: translateY(-8px); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #222; }
+
+        .inserloft-seal {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;
+            text-align: right; opacity: 0.3; transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        @media (max-width: 768px) { .inserloft-seal { bottom: 1rem; right: 1rem; opacity: 0.2; scale: 0.8; } }
     </style>
 </head>
 <body class="antialiased">
 
     <nav class="fixed top-0 left-0 right-0 z-[200] border-b border-white/5 bg-[#050505]/80 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 bg-blue-500 rounded flex items-center justify-center font-black text-black text-xs italic">NP</div>
-                <span class="text-xl font-black tracking-tighter code-font">NeuroPy</span>
+            <div class="flex items-center space-x-4">
+                <div class="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+                    <span class="text-white font-black text-xs italic">NP</span>
+                </div>
+                <span class="text-xl font-black tracking-tighter code-font hidden sm:block">NeuroPy</span>
             </div>
 
-            <div class="flex items-center bg-white/5 rounded-full p-1 border border-white/10" id="lang-selector">
-                <button onclick="setLanguage('es')" id="btn-es" class="px-4 py-1.5 bg-white text-black text-[9px] font-black rounded-full transition shadow-xl">ES</button>
-                <button onclick="setLanguage('en')" id="btn-en" class="px-4 py-1.5 text-gray-400 text-[9px] font-black hover:text-white transition">EN</button>
+            <div class="flex items-center space-x-6">
+                <div class="flex bg-white/5 border border-white/10 rounded-full p-1" id="lang-switcher">
+                    <button onclick="setLanguage('es')" id="btn-es" class="px-4 py-1.5 bg-white text-black text-[9px] font-black rounded-full transition shadow-xl">ES</button>
+                    <button onclick="setLanguage('en')" id="btn-en" class="px-4 py-1.5 text-gray-400 text-[9px] font-black hover:text-white transition">EN</button>
+                </div>
+                
+                <a href="https://github.com/LogLabsOrg/NeuroPy" target="_blank" class="text-gray-400 hover:text-white transition">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                </a>
             </div>
         </div>
     </nav>
 
-    <section class="pt-40 pb-20 px-6 text-center relative overflow-hidden">
+    <header class="pt-48 pb-20 px-6 text-center relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none"></div>
         <div class="max-w-5xl mx-auto relative z-10">
-            <div class="inline-block px-4 py-1 mb-8 border border-blue-500/20 rounded-full bg-blue-500/5 text-blue-400 text-[10px] font-black tracking-[0.3em] uppercase animate-pulse">
-                LogAI Genesis — Alpha 0.3.0
+            <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-blue-500/5 border border-blue-500/20 mb-10">
+                <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">LogAI Genesis Alpha v0.3.0</span>
             </div>
-            <h1 class="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] italic mb-10" id="hero-title">
-                Neural <br><span class="gradient-text text-5xl md:text-9xl">Protocol.</span>
+            <h1 class="text-6xl md:text-[9rem] font-black tracking-tighter leading-[0.85] italic mb-10" id="hero-title">
+                Neural <br><span class="gradient-text">Protocol.</span>
             </h1>
-            <p class="max-w-2xl mx-auto text-gray-500 text-lg md:text-xl font-medium mb-12" id="hero-desc">
-                La capa de comunicación nativa para el ecosistema Neuron. Desarrollado por LogLabs bajo la infraestructura de Inserloft.
+            <p class="max-w-2xl mx-auto text-gray-500 text-lg md:text-2xl font-medium mb-16 leading-relaxed" id="hero-desc">
+                La capa de comunicación nativa para el ecosistema <span class="text-white italic">Neuron</span>. Desarrollado por LogLabs bajo el sello de Inserloft.
             </p>
             
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://raw.githubusercontent.com/LogLabsOrg/NeuroPy/main/install.sh" class="w-full sm:w-auto bg-white text-black px-10 py-4 rounded-xl font-black text-xs tracking-widest hover:bg-blue-400 hover:text-white transition shadow-2xl">
-                    DESCARGAR INSTALLER
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <a href="https://raw.githubusercontent.com/LogLabsOrg/NeuroPy/main/install.sh" class="w-full sm:w-auto bg-white text-black px-12 py-5 rounded-2xl font-black text-sm tracking-widest hover:bg-blue-400 hover:text-white transition-all transform hover:scale-105 active:scale-95 shadow-xl uppercase">
+                    Instalar Alpha
                 </a>
-                <a href="https://github.com/LogLabsOrg/NeuroPy/raw/main/vscode-extension-neuropy.zip" class="w-full sm:w-auto bg-[#111] border border-white/10 text-white px-10 py-4 rounded-xl font-black text-xs tracking-widest flex items-center justify-center hover:border-blue-500 transition">
-                    <svg class="w-4 h-4 mr-3 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .327 8.74l4.256 3.26-4.256 3.26a1 1 0 0 0 0 1.479l1.322 1.201a1 1 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.494 1.494 0 0 0 1.705.29l4.94-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
-                    VS CODE EXTENSION
+                <a href="https://github.com/LogLabsOrg/NeuroPy/raw/main/vscode-extension-neuropy.zip" class="w-full sm:w-auto bg-[#0d0d0d] border border-white/10 text-white px-12 py-5 rounded-2xl font-black text-sm tracking-widest flex items-center justify-center hover:border-blue-500 transition-all hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] uppercase">
+                    <svg class="w-5 h-5 mr-3 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .327 8.74l4.256 3.26-4.256 3.26a1 1 0 0 0 0 1.479l1.322 1.201a1 1 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.494 1.494 0 0 0 1.705.29l4.94-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
+                    VS Code Extension
                 </a>
             </div>
         </div>
-    </section>
+    </header>
 
-    <section class="max-w-4xl mx-auto px-6 mb-32">
-        <div class="terminal-window p-8 text-[12px] md:text-[14px] leading-8 code-font overflow-x-auto">
-            <div class="flex space-x-2 mb-8">
-                <div class="w-3 h-3 bg-red-500/30 rounded-full"></div>
-                <div class="w-3 h-3 bg-yellow-500/30 rounded-full"></div>
-                <div class="w-3 h-3 bg-green-500/30 rounded-full"></div>
+    <section class="max-w-5xl mx-auto px-6 mb-40">
+        <div class="glass-panel p-8 md:p-14 rounded-[2.5rem] relative overflow-hidden group">
+            <div class="flex items-center justify-between mb-10">
+                <div class="flex space-x-2">
+                    <div class="w-3 h-3 bg-red-500/40 rounded-full"></div>
+                    <div class="w-3 h-3 bg-yellow-500/40 rounded-full"></div>
+                    <div class="w-3 h-3 bg-green-500/40 rounded-full"></div>
+                </div>
+                <div class="text-[10px] font-black text-gray-700 tracking-widest uppercase italic">NeuroPy Core Interface — v0.3</div>
             </div>
-            <p><span class="text-blue-400">#NeuroPy</span> <span class="text-purple-400">&lt;neuron&gt;</span></p>
-            <p><span class="text-purple-400">import</span> Console.lib</p>
-            <p><span class="text-blue-400">create</span> LLM {</p>
-            <p class="pl-6">name model (<span class="text-green-400">"Cleo_Nano"</span>)</p>
-            <p class="pl-6 text-gray-600">// Neuron optimized params</p>
-            <p class="pl-6"><span class="text-blue-300">params</span>: *0.5</p>
-            <p>}</p>
-            <p><span class="text-blue-400">start</span> create LLM</p>
-        </div>
-    </section>
-
-    <section class="max-w-6xl mx-auto py-20 px-6 border-t border-white/5">
-        <h2 class="text-3xl font-black mb-16 italic italic" id="specs-title">Backends Integrados</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="backend-card p-10 rounded-3xl">
-                <h4 class="font-black text-sm text-blue-500 mb-4 uppercase tracking-widest">Tensor Engine</h4>
-                <h3 class="text-lg font-bold mb-4 italic">pytorch_backend.py</h3>
-                <p class="text-gray-500 text-sm leading-relaxed" id="py-desc">Optimización nativa para el entrenamiento de modelos Cleo.</p>
-            </div>
-            <div class="backend-card p-10 rounded-3xl border-purple-500/20">
-                <h4 class="font-black text-sm text-purple-500 mb-4 uppercase tracking-widest">Model Hub</h4>
-                <h3 class="text-lg font-bold mb-4 italic">hf_backend.py</h3>
-                <p class="text-gray-500 text-sm leading-relaxed" id="hf-desc">Conectividad directa con HuggingFace para despliegue global.</p>
-            </div>
-            <div class="backend-card p-10 rounded-3xl">
-                <h4 class="font-black text-sm text-green-500 mb-4 uppercase tracking-widest">Real-time Viz</h4>
-                <h3 class="text-lg font-bold mb-4 italic">viz_backend.py</h3>
-                <p class="text-gray-500 text-sm leading-relaxed" id="viz-desc">Dashboard NeuroViz para visualización de grafos neuronales.</p>
+            <div class="space-y-2 code-font text-sm md:text-base leading-relaxed">
+                <p><span class="text-blue-400"># NeuroPy</span> <span class="text-purple-400">&lt;neuron&gt;</span></p>
+                <p><span class="text-purple-400">import</span> Console.lib</p>
+                <p><span class="text-purple-400">import</span> MyLLM.lib <span class="text-gray-700 italic">// Research Division</span></p>
+                <br>
+                <p><span class="text-blue-400">create</span> LLM {</p>
+                <p class="pl-8">name model (<span class="text-green-400">"Cleo_Nano"</span>)</p>
+                <p class="pl-8"><span class="text-blue-300">optimizer</span> Adam(lr=0.001)</p>
+                <p class="pl-8"><span class="text-blue-300">params</span>: *0.5 <span class="text-gray-700 italic">// 67M Param Model</span></p>
+                <p>}</p>
+                <br>
+                <p><span class="text-blue-400">start</span> create LLM</p>
             </div>
         </div>
     </section>
 
-    <footer class="py-32 text-center border-t border-white/5 opacity-50 px-6">
-        <p class="text-[9px] font-black uppercase tracking-[0.5em] mb-4 text-gray-600">
-            &copy; 2026 LogLabs — LogAI Research Dept.
-        </p>
-        <div class="flex justify-center space-x-6">
-            <a href="https://x.com/LogLabsHQ" target="_blank" class="text-[10px] font-bold text-blue-400">@LogLabsHQ</a>
-            <a href="https://x.com/Inserloft" target="_blank" class="text-[10px] font-bold text-gray-400">@Inserloft</a>
+    <section class="max-w-7xl mx-auto py-20 px-6 border-t border-white/5">
+        <div class="text-center mb-24">
+            <h2 class="text-4xl md:text-5xl font-black italic mb-6" id="specs-title">Backends Integrados</h2>
+            <p class="text-gray-500 text-xs font-black tracking-[0.5em] uppercase">LogLabs Architecture</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="backend-card">
+                <div class="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8">
+                    <span class="text-blue-500 font-black italic">P</span>
+                </div>
+                <h3 class="text-xl font-bold mb-4 italic italic">pytorch_backend.py</h3>
+                <p class="text-gray-500 text-sm leading-relaxed" id="py-desc">Optimización nativa para el entrenamiento de modelos Cleo y gestión de tensores.</p>
+            </div>
+            <div class="backend-card border-purple-500/20">
+                <div class="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-8">
+                    <span class="text-purple-500 font-black italic">H</span>
+                </div>
+                <h3 class="text-xl font-bold mb-4 italic italic">hf_backend.py</h3>
+                <p class="text-gray-500 text-sm leading-relaxed" id="hf-desc">Conectividad directa con HuggingFace para despliegue global de modelos GGUF.</p>
+            </div>
+            <div class="backend-card">
+                <div class="w-12 h-12 bg-green-500/10 rounded-2xl flex items-center justify-center mb-8">
+                    <span class="text-green-500 font-black italic">V</span>
+                </div>
+                <h3 class="text-xl font-bold mb-4 italic italic">viz_backend.py</h3>
+                <p class="text-gray-500 text-sm leading-relaxed" id="viz-desc">Dashboard NeuroViz para visualización de grafos neuronales y métricas en tiempo real.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto py-32 px-6 border-t border-white/5 text-center">
+        <h2 class="text-3xl font-black mb-16 italic italic">X Connectivity</h2>
+        <div class="grid sm:grid-cols-3 gap-6">
+            <a href="https://x.com/LogLabsHQ" target="_blank" class="glass-panel p-10 rounded-[2.5rem] group">
+                <span class="text-[10px] font-black text-gray-600 uppercase tracking-widest block mb-3">Startup HQ</span>
+                <span class="text-lg font-bold text-white group-hover:text-blue-400 transition">@LogLabsHQ</span>
+            </a>
+            <a href="https://x.com/LogAILabs" target="_blank" class="glass-panel p-10 rounded-[2.5rem] group">
+                <span class="text-[10px] font-black text-gray-600 uppercase tracking-widest block mb-3">Research Division</span>
+                <span class="text-lg font-bold text-white group-hover:text-purple-400 transition">@LogAILabs</span>
+            </a>
+            <a href="https://x.com/Inserloft" target="_blank" class="glass-panel p-10 rounded-[2.5rem] group">
+                <span class="text-[10px] font-black text-gray-600 uppercase tracking-widest block mb-3">Parent Holding</span>
+                <span class="text-lg font-bold text-white group-hover:text-gray-400 transition italic">@Inserloft</span>
+            </a>
+        </div>
+    </section>
+
+    <footer class="py-40 text-center border-t border-white/5 px-6">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-[10px] font-black uppercase tracking-[0.8em] text-gray-700 mb-8 italic">
+                LogLabs &copy; 2026. All Rights Reserved.
+            </p>
+            <div class="flex flex-wrap justify-center gap-8 text-[9px] font-bold text-gray-800 uppercase tracking-widest italic">
+                <span>NeuroPy Engine</span>
+                <span class="text-blue-500/20">•</span>
+                <span>Neuron Core</span>
+                <span class="text-blue-500/20">•</span>
+                <span>Inserloft Group</span>
+            </div>
         </div>
     </footer>
 
     <div class="inserloft-seal">
-        <p class="text-[8px] font-black text-gray-800 uppercase tracking-widest mb-1 italic">Operado por</p>
-        <p class="text-3xl font-black italic text-white tracking-tighter">INSERLOFT</p>
+        <p class="text-[9px] font-black text-gray-800 uppercase tracking-[0.5em] mb-1 italic">Ecosistema</p>
+        <p class="text-4xl font-black italic text-white tracking-tighter">INSERLOFT</p>
     </div>
 
     <script>
-        const translations = {
+        const content = {
             es: {
                 heroTitle: 'Neural <br><span class="gradient-text">Protocol.</span>',
-                heroDesc: 'La capa de comunicación nativa para el ecosistema Neuron. Desarrollado por LogLabs bajo la infraestructura de Inserloft.',
+                heroDesc: 'La capa de comunicación nativa para el ecosistema <span class="text-white italic">Neuron</span>. Desarrollado por LogLabs bajo el sello de Inserloft.',
                 specsTitle: 'Backends Integrados',
-                pyDesc: 'Optimización nativa para el entrenamiento de modelos Cleo.',
-                hfDesc: 'Conectividad directa con HuggingFace para despliegue global.',
-                vizDesc: 'Dashboard NeuroViz para visualización de grafos neuronales.'
+                pyDesc: 'Optimización nativa para el entrenamiento de modelos Cleo y gestión de tensores.',
+                hfDesc: 'Conectividad directa con HuggingFace para despliegue global de modelos GGUF.',
+                vizDesc: 'Dashboard NeuroViz para visualización de grafos neuronales y métricas en tiempo real.'
             },
             en: {
                 heroTitle: 'Neural <br><span class="gradient-text">Protocol.</span>',
-                heroDesc: 'The native communication layer for the Neuron ecosystem. Developed by LogLabs under Inserloft infrastructure.',
+                heroDesc: 'The native communication layer for the <span class="text-white italic">Neuron</span> ecosystem. Developed by LogLabs under Inserloft infrastructure.',
                 specsTitle: 'Integrated Backends',
-                pyDesc: 'Native optimization for Cleo model training and inference.',
-                hfDesc: 'Direct HuggingFace connectivity for global model deployment.',
-                vizDesc: 'NeuroViz dashboard for neural graph visualization.'
+                pyDesc: 'Native optimization for Cleo model training and tensor management.',
+                hfDesc: 'Direct HuggingFace connectivity for global deployment of GGUF models.',
+                vizDesc: 'NeuroViz Dashboard for neural graph visualization and real-time metrics.'
             }
         };
 
         function setLanguage(lang) {
-            const t = translations[lang];
+            const t = content[lang];
             document.getElementById('hero-title').innerHTML = t.heroTitle;
-            document.getElementById('hero-desc').innerText = t.heroDesc;
+            document.getElementById('hero-desc').innerHTML = t.heroDesc;
             document.getElementById('specs-title').innerText = t.specsTitle;
             document.getElementById('py-desc').innerText = t.pyDesc;
             document.getElementById('hf-desc').innerText = t.hfDesc;
             document.getElementById('viz-desc').innerText = t.vizDesc;
 
-            // Update Buttons
-            const btnEs = document.getElementById('btn-es');
-            const btnEn = document.getElementById('btn-en');
-            
+            // UI Button styling
+            const es = document.getElementById('btn-es');
+            const en = document.getElementById('btn-en');
             if (lang === 'es') {
-                btnEs.className = 'px-4 py-1.5 bg-white text-black text-[9px] font-black rounded-full transition shadow-xl';
-                btnEn.className = 'px-4 py-1.5 text-gray-400 text-[9px] font-black hover:text-white transition';
+                es.className = 'px-4 py-1.5 bg-white text-black text-[9px] font-black rounded-full transition shadow-xl';
+                en.className = 'px-4 py-1.5 text-gray-400 text-[9px] font-black hover:text-white transition';
             } else {
-                btnEn.className = 'px-4 py-1.5 bg-white text-black text-[9px] font-black rounded-full transition shadow-xl';
-                btnEs.className = 'px-4 py-1.5 text-gray-400 text-[9px] font-black hover:text-white transition';
+                en.className = 'px-4 py-1.5 bg-white text-black text-[9px] font-black rounded-full transition shadow-xl';
+                es.className = 'px-4 py-1.5 text-gray-400 text-[9px] font-black hover:text-white transition';
             }
         }
     </script>
