@@ -21,12 +21,21 @@
 
     <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-[#050505]/80 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-8 h-24 flex items-center justify-between">
-            <div class="text-2xl font-bold tracking-tighter code-font">
-                <span class="text-[#4facfe]">>_</span> NeuroPy
+            <div class="flex items-center space-x-4">
+                <div class="text-2xl font-bold tracking-tighter code-font">
+                    <span class="text-[#4facfe]">>_</span> NeuroPy
+                </div>
             </div>
-            <div class="flex items-center bg-white/5 rounded-full p-1.5 border border-white/10">
-                <button onclick="setLanguage('es')" id="btn-es" class="px-5 py-2 bg-white text-black text-[10px] font-black rounded-full transition-all">ES</button>
-                <button onclick="setLanguage('en')" id="btn-en" class="px-5 py-2 text-gray-400 text-[10px] font-black hover:text-white transition-all">EN</button>
+            
+            <div class="flex items-center space-x-6">
+                <a href="https://github.com/LogLabsOrg/NeuroPy" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                </a>
+                
+                <div class="flex items-center bg-white/5 rounded-full p-1.5 border border-white/10">
+                    <button onclick="setLanguage('es')" id="btn-es" class="px-5 py-2 bg-white text-black text-[10px] font-black rounded-full transition-all">ES</button>
+                    <button onclick="setLanguage('en')" id="btn-en" class="px-5 py-2 text-gray-400 text-[10px] font-black hover:text-white transition-all">EN</button>
+                </div>
             </div>
         </div>
     </nav>
@@ -48,9 +57,9 @@
                 <a href="https://github.com/LogLabsOrg/NeuroPy/archive/refs/heads/main.zip" id="main-download" class="w-full sm:w-auto bg-white text-black px-12 py-5 rounded-2xl font-black text-xs tracking-widest hover:invert transition-all uppercase shadow-2xl shadow-white/10">
                     Instalar
                 </a>
-                <a href="https://marketplace.visualstudio.com" target="_blank" id="vs-extension" class="w-full sm:w-auto bg-[#111] border border-white/10 text-white px-12 py-5 rounded-2xl font-black text-xs tracking-widest flex items-center justify-center hover:border-blue-500 transition-all">
+                <a href="https://github.com/LogLabsOrg/NeuroPy/raw/refs/heads/main/vscode-extension-neuropy.zip" id="vs-extension-btn" class="w-full sm:w-auto bg-[#111] border border-white/10 text-white px-12 py-5 rounded-2xl font-black text-xs tracking-widest flex items-center justify-center hover:border-blue-500 transition-all">
                     <svg class="w-5 h-5 mr-3 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .327 8.74l4.256 3.26-4.256 3.26a1 1 0 0 0 0 1.479l1.322 1.201a1 1 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.494 1.494 0 0 0 1.705.29l4.94-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
-                    VS CODE EXTENSION
+                    <span id="vs-text">VS CODE EXTENSION</span>
                 </a>
             </div>
         </div>
@@ -104,10 +113,7 @@
             // Cambiar Textos Hero
             document.getElementById('hero-desc').innerText = content[lang].hero;
             document.getElementById('main-download').innerText = content[lang].install;
-            document.getElementById('vs-extension').innerHTML = `
-                <svg class="w-5 h-5 mr-3 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .327 8.74l4.256 3.26-4.256 3.26a1 1 0 0 0 0 1.479l1.322 1.201a1 1 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.494 1.494 0 0 0 1.705.29l4.94-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
-                ${content[lang].vs}
-            `;
+            document.getElementById('vs-text').innerText = content[lang].vs;
 
             // Cambiar Textos Backends
             document.getElementById('specs-title').innerText = content[lang].specs;
